@@ -1,4 +1,17 @@
 "use strict";
+
+function get_query(){
+  var url = location.href;
+  var qs = url.substring(url.indexOf('?') + 1).split('&');
+  for(var i = 0, result = {}; i < qs.length; i++){
+    qs[i] = qs[i].split('=');
+    result[qs[i][0]] = decodeURIComponent(qs[i][1]);
+  }
+  return result;
+}
+
+
+
 /**
  * @type {HTMLFormElement}
  */
@@ -34,3 +47,10 @@ form.addEventListener("submit", async (event) => {
   const url = search(address.value, searchEngine.value);
   location.href = __uv$config.prefix + __uv$config.encodeUrl(url);
 });
+
+if(get_query()["url"] != null){
+  
+  const url = search(get_query()["url"]);
+  location.href = __uv$config.prefix + __uv$config.encodeUrl(url);
+  
+}
